@@ -1,9 +1,6 @@
 package com.demoqa.core;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -57,6 +54,10 @@ public class BaseFunctions {
     }
 
     public boolean isContainsText(String text, WebElement element) {
-
         return element.getText().contains(text);}
+
+    public boolean isElementPresent(By locator) {
+        return driver.findElements(locator).size() > 0;
+    }
+
 }

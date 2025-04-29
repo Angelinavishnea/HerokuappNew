@@ -57,4 +57,20 @@ public class HomePage extends BaseFunctions {
     public void selectContextMenu() {
         clickWithJS(contextMenu, 0, 400);
     }
+
+/// //////////////////////////////////////////////////////////////////////////
+    @FindBy(xpath = "//a[contains(text(),'File Upload')]")
+    WebElement fileUpload;
+
+    public void selectFileUpload() {
+        clickWithJS(fileUpload,0,300);
+    }
+/// //////////////////////////////////////////////////////////////////////
+
+    @FindBy(xpath = "//a[contains(text(),'Checkboxes')]")
+    WebElement checkboxes;
+
+    public void selectCheckbos() {
+        clickWithJS(checkboxes,0,400);
+    }
 }
