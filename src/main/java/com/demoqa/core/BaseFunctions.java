@@ -1,10 +1,13 @@
 package com.demoqa.core;
 
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.Duration;
 
 public class BaseFunctions {
@@ -12,6 +15,7 @@ public class BaseFunctions {
     public WebDriver driver;
     public static JavascriptExecutor js;
     //относится к Selenium, управляет браузером через JavaScript
+    public static SoftAssertions softly;
 
     public BaseFunctions(WebDriver driver){
         this.driver = driver;
@@ -19,6 +23,7 @@ public class BaseFunctions {
         //функция из  Selenium, дает возможность пользоваться @FindBy
         js = (JavascriptExecutor) driver;
         //активирует Javascript функционал
+        softly = new SoftAssertions();
     }
 
     public void scrollWithJS(int x, int y){
@@ -58,6 +63,31 @@ public class BaseFunctions {
 
     public boolean isElementPresent(By locator) {
         return driver.findElements(locator).size() > 0;
+    }
+
+    public void verifyLinks(String url) {
+
+        try {
+            URL linkUrl = new URL(url);
+
+            //create URL connection and get response code
+            HttpURLConnection connection = (HttpURLConnection) linkUrl.openConnection();
+            connection.setConnectTimeout(5000);
+            connection.connect();
+
+            if (connection.getResponseCode() >= 400) {
+                //   System.out.println(url + " - " + connection.getResponseMessage() + "is a broken link");
+                System.out.println("bad");
+                softly.fail(url + " - " + connection.getResponseMessage() + "is a broken link");
+            } else {
+                //  System.out.println(url + " - " + connection.getResponseMessage());
+                System.out.println("good");
+                softly.assertThat(connection.getResponseCode()).isLessThan(400);
+            }
+        } catch (Exception e) {
+            System.out.println(url + " - " + e.getMessage() + " ERROR occurred");
+        }
+        //softly.assertAll();
     }
 
 }

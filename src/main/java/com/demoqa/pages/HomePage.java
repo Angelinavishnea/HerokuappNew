@@ -73,4 +73,11 @@ public class HomePage extends BaseFunctions {
     public void selectCheckbos() {
         clickWithJS(checkboxes,0,400);
     }
+/// ////////////////////////////////////////////////////////////////////////////////
+    @FindBy(xpath = "//a[contains(text(),'Redirect Link')]")
+    WebElement redirectLink;
+
+    public void selectRedirectLink() {
+        clickWithJS(redirectLink,0,500);
+    }
 }
